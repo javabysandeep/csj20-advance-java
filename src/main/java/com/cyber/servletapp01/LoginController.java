@@ -1,5 +1,6 @@
 package com.cyber.servletapp01;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,15 +18,23 @@ public class LoginController extends HttpServlet {
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        
-        PrintWriter writer = resp.getWriter();
 
-        if(username.equals("abc") && password.equals("abc")){
-            System.out.println("Welcome");
-            writer.println("Welcome");
-        } else{
-            System.out.println("Invalid credentials");
-            writer.println("invalid credentials");
+        PrintWriter writer = resp.getWriter();
+        writer.println("From Login Controller");
+
+        resp.setContentType("text/html");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("error.html");
+
+        if (username.equals("abc") && password.equals("abc")) {
+//            System.out.println("Welcome");
+//            writer.println("Welcome");
+            // new http get request
+            resp.sendRedirect("welcome.html");
+
+        } else {
+//            System.out.println("Invalid credentials");
+//            writer.println("invalid credentials");
+            requestDispatcher.include(req, resp);
         }
 
     }
